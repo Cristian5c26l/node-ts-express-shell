@@ -9,7 +9,7 @@ export class JwtAdapter {
 
     return new Promise((resolve) => {
 
-      jwt.sign(payload, JWT_SEED, {expiresIn: duration}, (err, token) => {
+      jwt.sign(payload, JWT_SEED, {expiresIn: duration}, (err, token) => {// Crear token que contenga un payload codificado. Este token estará firmado por la semilla JWT_SEED
         
         if ( err ) return resolve(null);
 
@@ -24,10 +24,17 @@ export class JwtAdapter {
 
   static validateToken(token: string) {
 
+    return new Promise((resolve) => {
 
-    throw new Error('Not implemented');
+      jwt.verify(token, JWT_SEED, (err, decoded) => {// Verificar si token está firmado o fue creado con la semilla JWT_SEED (y tambien se verifica si dicha semilla JWT_SEED es la firma del token junto con el payload)
+        
+        if (err) return resolve(null);
 
-    return;
+        resolve(decoded);// decoded es el payload decodificado (payload antes de ser codificado para que fuera parte del token)
+
+      });
+
+    });
   }
 
 }

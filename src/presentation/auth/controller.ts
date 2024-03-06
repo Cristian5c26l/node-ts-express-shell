@@ -55,8 +55,14 @@ export class AuthController {
   }
 
   validateEmail = (req: Request, res: Response) => {
+    
+    const { token } = req.params;// Obtenemos el parametro token de la peticion (req) a url localhost:3000/api/auth/validate-email/:token
+    
+    
+    this.authService.validateEmail( token )
+      .then(() => res.json('Email was validated properly'))
+      .catch((error) => this.handleError(error, res));
 
-    res.json('validateEmail');
   }
 
 
