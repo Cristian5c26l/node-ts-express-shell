@@ -22,7 +22,7 @@ export class JwtAdapter {
 
   }
 
-  static validateToken(token: string) {
+  static validateToken<T>(token: string): Promise<T|null> {
 
     return new Promise((resolve) => {
 
@@ -30,7 +30,7 @@ export class JwtAdapter {
         
         if (err) return resolve(null);
 
-        resolve(decoded);// decoded es el payload decodificado (payload antes de ser codificado para que fuera parte del token)
+        resolve(decoded as T);// decoded es el payload decodificado (payload antes de ser codificado para que fuera parte del token)
 
       });
 

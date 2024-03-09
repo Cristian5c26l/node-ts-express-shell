@@ -22,6 +22,7 @@ export class EmailService {
     mailerService: string,// Servicio ocupado por el email con el fin de poder enviar correos electronicos 
     mailerEmail: string,// email (del que enviará los correos electronicos)
     senderEmailPassword: string,// key o password necesario del email para poder enviar correos electronicos 
+    private readonly postToProvider: boolean, // Bandera para indicar si se envia o no el correo electrónico
   ) {
     
     this.transporter = nodemailer.createTransport( {
@@ -41,6 +42,8 @@ export class EmailService {
 
 
     try {
+
+      if ( !this.postToProvider ) return true;
 
       const sentInformation = await this.transporter.sendMail( {
         to: to,

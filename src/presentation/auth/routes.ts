@@ -13,7 +13,7 @@ export class Authroutes {
   static get routes(): Router {
 
     const router = Router();
-    const emailService = new EmailService(envs.MAILER_SERVICE, envs.MAILER_EMAIL, envs.MAILER_SECRET_KEY);
+    const emailService = new EmailService(envs.MAILER_SERVICE, envs.MAILER_EMAIL, envs.MAILER_SECRET_KEY, envs.SEND_EMAIL);
     const authService = new AuthService(emailService);
 
     const authController = new AuthController(authService);
