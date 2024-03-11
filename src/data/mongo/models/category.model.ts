@@ -22,5 +22,12 @@ const categorySchema = new mongoose.Schema({
 
 });
 
+categorySchema.set('toJSON', {
+  virtuals: true,// agregar id cuando se traiga un modelo category de mongoose 
+  versionKey: false, // quitar __v cuando se traiga un modelo category de mongoose
+  transform: function(doc, ret, options) {
+    delete ret._id// ocultar _id cuando se traiga un modelo category de mongoose
+  },
+});
 
 export const CategoryModel = mongoose.model('Category', categorySchema);// Coleccion Category (categorys)

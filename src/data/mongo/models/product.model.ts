@@ -39,5 +39,13 @@ const productSchema = new mongoose.Schema({
 
 });
 
+// NOTA: Esto solo funciona con const product = new ProductModel({name: '', ....}) y await product.save(). No funciona con ProductModel.insertMany 
+productSchema.set('toJSON', {
+  virtuals: true,
+  versionKey: false,
+  transform: function(doc, ret, options) {
+    delete ret._id;
+  },
+});
 
 export const ProductModel = mongoose.model('Product', productSchema);// Coleccion product (products)
