@@ -1,4 +1,5 @@
 import express, { Router } from 'express';
+import fileUpload from 'express-fileupload';
 import path from 'path';
 
 interface Options {
@@ -28,9 +29,12 @@ export class Server {
   async start() {
     
 
-    //* Middlewares
-    this.app.use( express.json() ); // raw
-    this.app.use( express.urlencoded({ extended: true }) ); // x-www-form-urlencoded
+    //* Middlewares que se aplican a todas las rutas incluidas en esta aplicacion. Estas rutas son /, this.routes y todas las demas (*)
+    this.app.use( express.json() ); // body tipo raw
+    this.app.use( express.urlencoded({ extended: true }) ); // body tipo x-www-form-urlencoded
+    this.app.use(fileUpload({// agrega file a los archivos (files) de la peticion (req) (req.files.file) manejada por cada controlador para dicha peticion. file de req.files.file será un objeto de tipo UploadedFile o será de tipo UploadedFile[] (un array de objetos UploadedFile) en caso de que se envien en el body de la peticion 2 o mas archivos
+      limits: { fileSize: 50 * 1024 * 1024 },
+    }));// middleware fileUpload esta destinado a que funcione si el body es de tipo multipart/form-data
 
     //* Public Folder
     this.app.use( express.static( this.publicPath ) );
